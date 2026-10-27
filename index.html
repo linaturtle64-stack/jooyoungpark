@@ -268,7 +268,7 @@ footer{background:var(--ink);color:color-mix(in srgb,var(--bg) 65%,var(--ink));f
 @keyframes blink{50%{opacity:0}}
 .motto .hl{color:var(--bg);text-decoration:underline;text-decoration-color:var(--lac-bright);text-underline-offset:6px}
 @media (max-width:860px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (prefers-reduced-motion: reduce){.mapbox .c,.mapbox .dc{opacity:1;animation:none}.caret{animation:none}}
+@media (prefers-reduced-motion: reduce) and (max-width: 0px){.mapbox .c,.mapbox .dc{opacity:1;animation:none}.caret{animation:none}}
 @media (max-width:860px){
   section{padding:64px 0}
   .hero{grid-template-columns:1fr;gap:28px;padding-top:36px}
@@ -286,7 +286,7 @@ footer{background:var(--ink);color:color-mix(in srgb,var(--bg) 65%,var(--ink));f
   .dotbtn span{font-size:13px}
   .core{width:52%;font-size:14px}
 }
-@media (prefers-reduced-motion: reduce){
+@media (prefers-reduced-motion: reduce) and (max-width: 0px){
   html{scroll-behavior:auto}
   .arcs .arc{animation:none;stroke-dashoffset:0}
   .arcs .pt{animation:none;opacity:1}
@@ -368,7 +368,7 @@ sup.tn{display:inline-flex;align-items:center;justify-content:center;width:18px;
   .bnote+.bnote::before{content:"↓";left:50%;top:-26px;transform:translateX(-50%)}
   .tdetail{padding:16px}
 }
-@media (prefers-reduced-motion: reduce){
+@media (prefers-reduced-motion: reduce) and (max-width: 0px){
   .torwrap .ttag,.bnote{opacity:1;transform:none;transition:none}
   .tcell mark{background-size:100% 100%;transition:none}
   .leaders path{stroke-dashoffset:0;animation:none!important}
@@ -412,7 +412,7 @@ sup.tn{display:inline-flex;align-items:center;justify-content:center;width:18px;
   .vhead{display:none}
   .varr{transform:rotate(90deg);height:36px}
 }
-@media (prefers-reduced-motion: reduce){.values.rv .vrow{opacity:1;transform:none;transition:none}}
+@media (prefers-reduced-motion: reduce) and (max-width: 0px){.values.rv .vrow{opacity:1;transform:none;transition:none}}
 /* round 4 */
 .torwrap.done .ttag{transition-delay:0s!important;opacity:1}
 .torwrap.done .tcell mark{transition:none;background-size:100% 100%}
@@ -496,7 +496,7 @@ section.thanks{background-color:#0B2341}
 .sw.t1{background:#0B2341}.sw.t2{background:#2F5D8C}.sw.t3{background:#9DB7D5}
 .sw.t4{background:repeating-linear-gradient(45deg,#7F9CC0 0 2px,#FFFFFF 2px 5px);outline:1px solid #7F9CC0}
 @media (max-width:600px){.mapbox{display:block}}
-@media (prefers-reduced-motion: reduce){.map .cty{opacity:1;animation:none}.maplegend .lgi{opacity:1}}
+@media (prefers-reduced-motion: reduce) and (max-width: 0px){.map .cty{opacity:1;animation:none}.maplegend .lgi{opacity:1}}
 @media print{.map .cty{opacity:1!important;animation:none!important}.maplegend .lgi{opacity:1!important}}
 /* requirements met */
 .tdocbox u.meet{text-decoration:none;color:var(--ink);background-image:linear-gradient(#1E7B4F,#1E7B4F);background-repeat:no-repeat;background-position:0 100%;background-size:0% 2px;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding-bottom:1px;transition:background-size .6s ease 2.4s}
@@ -505,9 +505,9 @@ section.thanks{background-color:#0B2341}
 .met i{font-style:normal;flex:none;display:inline-flex;width:18px;height:18px;border-radius:50%;background:#1E7B4F;color:#FFFFFF;align-items:center;justify-content:center;font-size:12px}
 .torwrap.on .met,.torwrap.done .met{opacity:1}
 .torwrap.done .tdocbox u.meet,.torwrap.done .met{transition:none}
-@media (prefers-reduced-motion: reduce){.tdocbox u.meet{background-size:100% 2px;transition:none}.met{opacity:1;transition:none}}
+@media (prefers-reduced-motion: reduce) and (max-width: 0px){.tdocbox u.meet{background-size:100% 2px;transition:none}.met{opacity:1;transition:none}}
 @media print{.tdocbox u.meet{background-size:100% 2px!important}.met{opacity:1!important}}
-@media (prefers-reduced-motion: reduce){.caret{animation:blink 1s steps(1) infinite!important}}
+@media (prefers-reduced-motion: reduce) and (max-width: 0px){.caret{animation:blink 1s steps(1) infinite!important}}
 </style>
 </head>
 <body>
@@ -1004,7 +1004,7 @@ const DOTTAGS=[["t2","t5"],["t5"],["t1","t4"],["t1","t2","t3","t4","t5"],["t1","
 function openTask(id){ if(cur!==id) toggleTask(id); else $("taskDetail").scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"}); }
 
 let lang="en", cur="t1", autoStarted=false, scene=0, timer=null, playing=false, ended=false;
-const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const reduce=false; /* animations always play, as requested */
 const $=id=>document.getElementById(id);
 const stage=$("stage"), svg=$("links"), cap=$("caption"), stepsEl=$("steps"), playBtn=$("play"), player=$("player");
 const nodes={}; stage.querySelectorAll(".node").forEach(n=>nodes[n.dataset.id]=n);
