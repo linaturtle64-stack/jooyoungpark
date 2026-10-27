@@ -507,6 +507,7 @@ section.thanks{background-color:#0B2341}
 .torwrap.done .tdocbox u.meet,.torwrap.done .met{transition:none}
 @media (prefers-reduced-motion: reduce){.tdocbox u.meet{background-size:100% 2px;transition:none}.met{opacity:1;transition:none}}
 @media print{.tdocbox u.meet{background-size:100% 2px!important}.met{opacity:1!important}}
+@media (prefers-reduced-motion: reduce){.caret{animation:blink 1s steps(1) infinite!important}}
 </style>
 </head>
 <body>
@@ -1244,8 +1245,9 @@ function renderAfter(){
   $("planGrid").innerHTML=d.plan.map(p=>`<div class="phase"><h3>${esc(p.h)}</h3><ol>${p.i.map(([w,t])=>`<li><span class="w">${esc(w)}</span><span>${esc(t)}</span></li>`).join("")}</ol></div>`).join("");
 }
 /* ---------- thanks reveal ---------- */
-function initThanks(){const th=$("thanks");if(reduce||!("IntersectionObserver" in window)){th.classList.add("in");typeMotto();return;}
-  const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){th.classList.add("in");o.disconnect();setTimeout(typeMotto,1300);}}),{threshold:.3});o.observe(th);}
+function initThanks(){const th=$("thanks");$("motto").addEventListener("click",()=>{if(mottoState!=="typing")typeMotto();});if(!("IntersectionObserver" in window)){th.classList.add("in");typeMotto();return;}
+  const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){th.classList.add("in");o.disconnect();}}),{threshold:.2});o.observe(th);
+  const om=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&mottoState!=="typing"){setTimeout(()=>{if(mottoState!=="typing")typeMotto();},500);}}),{threshold:.9});om.observe($("motto"));}
 
 let progStamp=0, mottoState="idle", mottoTimer=null;
 function updateProg(){
@@ -1260,7 +1262,6 @@ function hlMotto(s){return esc(s);}
 function syncMotto(){const full=T[lang].motto;$("mottoSr").textContent=full;if(mottoState!=="idle"){clearInterval(mottoTimer);mottoState="done";$("mottoTxt").innerHTML=hlMotto(full);}}
 function typeMotto(){
   const full=T[lang].motto, el=$("mottoTxt");
-  if(reduce){mottoState="done";el.innerHTML=hlMotto(full);return;}
   mottoState="typing"; let i=0; el.textContent="";
   mottoTimer=setInterval(()=>{i++;el.textContent=full.slice(0,i);if(i>=full.length){clearInterval(mottoTimer);mottoState="done";el.innerHTML=hlMotto(full);}},38);
 }
